@@ -2,3 +2,4 @@
 .infracost
 *.backup
 *.lock.*
+*.tfstate
