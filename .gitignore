@@ -1,0 +1,4 @@
+.terraform
+.infracost
+*.backup
+*.lock.*
