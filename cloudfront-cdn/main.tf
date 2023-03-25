@@ -1,11 +1,10 @@
 locals {
-  service               = var.service
-  stage                 = var.stage
-  resource_prefix_name  = "${var.service}-${var.stage}"
-  route53_create_domain = var.create_domain
-  route53_private_zone  = var.route53_private_zone
-  route53_base_domain   = var.route53_zone_domain
-  cdn_domain            = var.cdn_domain
+  service              = var.service
+  stage                = var.stage
+  resource_prefix_name = "${var.service}-${var.stage}"
+  route53_private_zone = var.route53_private_zone
+  route53_base_domain  = var.route53_zone_domain
+  cdn_domain           = var.cdn_domain
 }
 
 # Get AWS Account ID

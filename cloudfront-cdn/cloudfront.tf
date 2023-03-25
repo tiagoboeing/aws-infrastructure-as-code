@@ -10,8 +10,8 @@ resource "aws_cloudfront_distribution" "cloudfront" {
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "CDN for ${local.resource_prefix_name}"
-  default_root_object = "index.html"
-  http_version        = "http2"
+  default_root_object = var.cloudfront_default_root_object
+  http_version        = var.cloudfront_http_version
 
   aliases = local.cdn_domain != "" ? [local.cdn_domain] : local.route53_base_domain != "" ? [local.route53_base_domain] : []
 
@@ -25,8 +25,8 @@ resource "aws_cloudfront_distribution" "cloudfront" {
     target_origin_id = aws_s3_bucket.bucket.id
 
     compress        = true
-    allowed_methods = ["GET", "HEAD", "OPTIONS"]
-    cached_methods  = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods = var.cloudfront_allowed_methods
+    cached_methods  = var.cloudfront_cached_methods
 
     forwarded_values {
       query_string = false
@@ -49,17 +49,18 @@ resource "aws_cloudfront_distribution" "cloudfront" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = local.route53_create_domain ? false : true
+    cloudfront_default_certificate = false
 
     minimum_protocol_version = "TLSv1.2_2021"
-    ssl_support_method       = local.route53_create_domain ? "sni-only" : null
+    ssl_support_method       = "sni-only"
 
-    acm_certificate_arn = local.route53_create_domain ? aws_acm_certificate_validation.certificate_validation.certificate_arn : null
+    acm_certificate_arn = aws_acm_certificate_validation.certificate_validation.certificate_arn
   }
 
 
   tags = {
-    Stage = local.stage
+    Stage   = local.stage,
+    Service = local.service
   }
 
   depends_on = [
@@ -78,8 +79,6 @@ resource "aws_route53_record" "domain_record" {
     zone_id                = aws_cloudfront_distribution.cloudfront.hosted_zone_id
     evaluate_target_health = false
   }
-
-  count = local.route53_create_domain ? 1 : 0
 
   depends_on = [
     aws_cloudfront_distribution.cloudfront

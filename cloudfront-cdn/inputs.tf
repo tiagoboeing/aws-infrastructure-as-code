@@ -10,12 +10,6 @@ variable "stage" {
   description = "Stage (dev, test, prod)"
 }
 
-variable "create_domain" {
-  default     = true
-  type        = bool
-  description = "Create Route53 domain"
-}
-
 variable "route53_private_zone" {
   default = false
   type    = bool
@@ -31,4 +25,24 @@ variable "cdn_domain" {
   default     = ""
   type        = string
   description = "Domain name (Where you want to deploy the CloudFront distribution. Leave empty to deploy inside base domain)"
+}
+
+variable "cloudfront_allowed_methods" {
+  default = ["GET", "HEAD", "OPTIONS"]
+  type    = list(string)
+}
+
+variable "cloudfront_cached_methods" {
+  default = ["GET", "HEAD", "OPTIONS"]
+  type    = list(string)
+}
+
+variable "cloudfront_default_root_object" {
+  default = "index.html"
+  type    = string
+}
+
+variable "cloudfront_http_version" {
+  default = "http2"
+  type    = string
 }
