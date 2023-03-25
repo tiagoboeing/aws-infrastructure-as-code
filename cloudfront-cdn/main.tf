@@ -2,13 +2,82 @@ locals {
   service              = "tf-cdn"
   stage                = "dev"
   resource_prefix_name = "${local.service}-${local.stage}"
-  domain_name          = "example.com"
+
+  route53_create_domain = true
+  route53_private_zone  = false
+
+  # the hosted zone domain name
+  route53_base_domain = "tiagoboeing.com"
+
+  # Where you want to deploy the CloudFront distribution
+  # leave empty to deploy inside base domain
+  cdn_domain = "terraform.tiagoboeing.com"
 }
 
 data "aws_caller_identity" "current" {}
 
-# IAM
-# TODO: Create a role for CloudFront to assume
+# Route53
+data "aws_route53_zone" "domain_zone" {
+  name         = "${local.route53_base_domain}."
+  private_zone = local.route53_private_zone
+}
+
+resource "aws_route53_record" "domain_record" {
+  name    = local.cdn_domain != "" ? local.cdn_domain : data.aws_route53_zone.domain_zone.name
+  type    = "AAAA"
+  zone_id = data.aws_route53_zone.domain_zone.zone_id
+
+  alias {
+    name                   = aws_cloudfront_distribution.cloudfront.domain_name
+    zone_id                = aws_cloudfront_distribution.cloudfront.hosted_zone_id
+    evaluate_target_health = false
+  }
+
+  count = local.route53_create_domain ? 1 : 0
+
+  depends_on = [
+    aws_cloudfront_distribution.cloudfront
+  ]
+}
+
+# ACM
+resource "aws_acm_certificate" "certificate" {
+  domain_name       = local.cdn_domain != "" ? local.cdn_domain : data.aws_route53_zone.domain_zone.name
+  validation_method = "DNS"
+
+  count = local.route53_create_domain ? 1 : 0
+}
+
+resource "aws_acm_certificate_validation" "certificate_validation" {
+  certificate_arn         = aws_acm_certificate.certificate[0].arn
+  validation_record_fqdns = [for record in aws_route53_record.certificate_records : record.fqdn]
+
+  depends_on = [
+    aws_acm_certificate.certificate
+  ]
+
+  timeouts {
+    create = "10m"
+  }
+}
+
+# Add Certificate Validation Records on Route53
+resource "aws_route53_record" "certificate_records" {
+  for_each = {
+    for dvo in aws_acm_certificate.certificate[0].domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  ttl             = 60
+  type            = each.value.type
+  zone_id         = data.aws_route53_zone.domain_zone.zone_id
+}
 
 # CloudFront
 resource "aws_cloudfront_origin_access_control" "cloudfront_acl" {
@@ -26,9 +95,7 @@ resource "aws_cloudfront_distribution" "cloudfront" {
   default_root_object = "index.html"
   http_version        = "http2"
 
-  # aliases = [
-  #   local.domain_name
-  # ]
+  aliases = local.cdn_domain != "" ? [local.cdn_domain] : local.route53_base_domain != "" ? [local.route53_base_domain] : []
 
   origin {
     origin_id                = aws_s3_bucket.bucket.id
@@ -64,8 +131,14 @@ resource "aws_cloudfront_distribution" "cloudfront" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    cloudfront_default_certificate = local.route53_create_domain ? false : true
+
+    minimum_protocol_version = "TLSv1.2_2021"
+    ssl_support_method       = local.route53_create_domain ? "sni-only" : null
+
+    acm_certificate_arn = local.route53_create_domain ? aws_acm_certificate_validation.certificate_validation.certificate_arn : null
   }
+
 
   tags = {
     Stage = local.stage
@@ -78,7 +151,7 @@ resource "aws_cloudfront_distribution" "cloudfront" {
 
 # S3
 resource "aws_s3_bucket" "bucket" {
-  bucket = "${local.resource_prefix_name}-cdn-${data.aws_caller_identity.current.account_id}"
+  bucket = "${local.resource_prefix_name}-bucket-${data.aws_caller_identity.current.account_id}"
 
   tags = {
     Stage = local.stage
