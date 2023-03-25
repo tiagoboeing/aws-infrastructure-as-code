@@ -1,10 +1,13 @@
 # CloudFront CDN with custom domain
 
+> Tested with custom subdomain.
+
 ## Stack
 
 - CloudFront
 - S3
 - Amazon Certificate Manager
+  - Custom SSL Certificate
 - Route53
 
 ## Pricing
