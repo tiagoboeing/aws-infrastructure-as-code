@@ -2,6 +2,6 @@
 
 Terraform Infrastructure as Code (IaC) for Amazon Web Services (AWS).
 
-## Stacks
+## Infrastructures
 
-- WIP: [CDN with CloudFront, S3, Route53 and Certificate Manager](./cloudfront-cdn)
+- [CDN on custom domain with CloudFront, S3, Route53 and Certificate Manager](./cloudfront-cdn)
