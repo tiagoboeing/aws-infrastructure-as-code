@@ -45,10 +45,9 @@ jobs:
             terraform-docs markdown table . > api-docs.md
           done
 
-      - name: Push changes
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actionsusername@users.noreply.github.com"
-          git add .
-          git commit -m "[skip ci] docs: Update Terraform docs"
-          git push
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: '[skip ci] docs: Update Terraform docs'
+          committer_name: GitHub Actions
+          committer_email: actions@github.com
+          add: '*.md'
