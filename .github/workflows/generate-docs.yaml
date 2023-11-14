@@ -29,6 +29,11 @@ jobs:
           sudo mv terraform-docs /usr/bin/terraform-docs
           rm terraform-docs-v0.16.0-linux-amd64.tar.gz
 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
       - name: Generate
         run: |
           IFS=';' read -ra ADDR <<< "$FOLDERS"
