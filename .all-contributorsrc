@@ -1,0 +1,28 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "tiagoboeing",
+      "name": "Tiago Boeing",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3449932?v=4",
+      "profile": "http://tiagoboeing.com",
+      "contributions": [
+        "doc",
+        "code",
+        "infra"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "terraform-aws",
+  "projectOwner": "tiagoboeing"
+}
