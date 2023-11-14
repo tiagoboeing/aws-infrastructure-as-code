@@ -25,7 +25,7 @@ resource "aws_cognito_identity_provider" "linkedin" {
   }
 
   # only create if client ID is defined
-  count = var.linkedin_credentials.client_id ? 1 : 0
+  count = var.linkedin_credentials.client_id != null ? 1 : 0
 }
 
 resource "aws_cognito_identity_provider" "google" {
@@ -57,5 +57,5 @@ resource "aws_cognito_identity_provider" "google" {
   }
 
   # only create if client ID is defined
-  count = var.google_credentials.client_id ? 1 : 0
+  count = var.google_credentials.client_id != null ? 1 : 0
 }

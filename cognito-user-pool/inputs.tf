@@ -9,6 +9,16 @@ variable "pool_name" {
   description = "The name of the user pool"
 }
 
+variable "route53_private_zone" {
+  default = false
+  type    = bool
+}
+
+variable "domain" {
+  description = "Custom domain name to use on the user pool"
+  type        = string
+}
+
 variable "logout_urls" {
   type        = list(string)
   description = "List of allowed logout URLs"
@@ -25,9 +35,25 @@ variable "callback_urls" {
 variable "linkedin_credentials" {
   description = "Linkedin OIDC settings"
   type        = map(string)
+  default     = {}
 }
 
 variable "google_credentials" {
   description = "Linkedin OIDC settings"
   type        = map(string)
+  default     = {}
+}
+
+# Custom domain
+variable "route53_zone_domain" {
+  default     = ""
+  type        = string
+  description = "Route53 zone domain (base domain)"
+}
+
+# Groups
+variable "user_groups" {
+  type        = list(map(string))
+  description = "List of user groups"
+  default     = [{ name = "Admins", description = "Admin users" }]
 }

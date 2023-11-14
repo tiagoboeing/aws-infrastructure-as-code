@@ -97,6 +97,6 @@ resource "aws_cognito_user_pool" "pool" {
   }
 
   tags = {
-    "Stage" = var.stage
+    "Stage" = local.stage
   }
 }
