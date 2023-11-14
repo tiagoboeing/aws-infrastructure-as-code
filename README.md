@@ -20,3 +20,14 @@ Each infrastructure has its own README with instructions.
 4. Push to the branch
 5. Create a new pull request
 6. Wait for the review and merge approval
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
