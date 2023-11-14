@@ -20,6 +20,8 @@ jobs:
   generate:
     name: Generate docs
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Install Terraform Docs
         run: |
