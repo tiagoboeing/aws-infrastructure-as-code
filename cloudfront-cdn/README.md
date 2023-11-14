@@ -1,6 +1,6 @@
 # CloudFront CDN with custom domain
 
-**[Live example](https://terraform-cdn.tiagoboeing.com/)**
+**[Live example](https://terraform-cdn.tiagoboeing.com/)** | **[API Docs](./api-docs.md)**
 
 > Tested with custom subdomain.
 

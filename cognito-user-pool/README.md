@@ -4,6 +4,8 @@
 
 AWS Cognito User Pool in Infrastructure as Code with Terraform. Include Identity Providers settings, just need to configure OAuth credentials.
 
+**See [API Docs](./api-docs.md) for reference.**
+
 This stack uses the following AWS services:
 
 - Cognito User Pool

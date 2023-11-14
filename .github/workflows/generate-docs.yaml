@@ -1,0 +1,55 @@
+name: Terraform Docs
+run-name: Generate Terraform docs
+
+concurrency:
+  group: terraform-docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  FOLDERS: 'cloudfront-cdn;cognito-user-pool'
+
+jobs:
+  generate:
+    name: Generate docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Install Terraform Docs
+        run: |
+          wget https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-amd64.tar.gz
+          tar -xzf terraform-docs-v0.16.0-linux-amd64.tar.gz
+          chmod +x terraform-docs
+          sudo mv terraform-docs /usr/bin/terraform-docs
+          rm terraform-docs-v0.16.0-linux-amd64.tar.gz
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Generate
+        run: |
+          IFS=';' read -ra ADDR <<< "$FOLDERS"
+          for i in "${ADDR[@]}"; do
+            echo "Changing folder..."
+            cd $GITHUB_WORKSPACE/$i
+
+            echo "Running Terraform Docs"
+            terraform-docs markdown table . > api-docs.md
+          done
+
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: '[skip ci] docs: Update Terraform docs'
+          committer_name: GitHub Actions
+          committer_email: github-actions@github.com
+          add: '*.md'
