@@ -49,5 +49,5 @@ jobs:
         with:
           message: '[skip ci] docs: Update Terraform docs'
           committer_name: GitHub Actions
-          committer_email: actions@github.com
+          committer_email: github-actions@github.com
           add: '*.md'
