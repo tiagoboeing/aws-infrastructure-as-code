@@ -3,3 +3,4 @@
 *.backup
 *.lock.*
 *.tfstate
+*.tfvars
