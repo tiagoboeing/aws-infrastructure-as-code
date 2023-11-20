@@ -26,6 +26,53 @@ resource "aws_cognito_identity_provider" "linkedin" {
 
   # only create if client ID is defined
   count = var.linkedin_credentials.client_id != null ? 1 : 0
+
+  depends_on = [
+    aws_cognito_user_pool.pool
+  ]
+}
+
+resource "aws_cognito_identity_provider" "github" {
+  user_pool_id = aws_cognito_user_pool.pool.id
+
+  provider_name = "Github"
+  provider_type = "OIDC"
+
+  attribute_mapping = {
+    email       = "email"
+    family_name = "name"
+    given_name  = "name"
+    picture     = "avatar_url"
+    username    = "sub"
+  }
+
+  provider_details = {
+    client_id                     = var.github_credentials.client_id
+    client_secret                 = var.github_credentials.client_secret
+    authorize_scopes              = "user openid"
+    attributes_request_method     = "GET"
+    attributes_url                = "https://api.github.com/user"
+    attributes_url_add_attributes = "false"
+    authorize_url                 = "https://github.com/login/oauth/authorize"
+    oidc_issuer                   = "https://www.github.com"
+    jwks_uri                      = "https://github.com/login/oauth/access_token"
+    token_url                     = "https://github.com/login/oauth/access_token"
+  }
+
+  # only create if client ID is defined
+  count = var.github_credentials.client_id != null ? 1 : 0
+
+  depends_on = [
+    aws_cognito_user_pool.pool
+  ]
+}
+
+module "github_lambda_function" {
+  source = "./github"
+  pool_name = var.pool_name
+  github_credentials = var.github_credentials
+  
+  count  = var.github_credentials.client_id != null ? 1 : 0
 }
 
 resource "aws_cognito_identity_provider" "google" {
@@ -58,4 +105,8 @@ resource "aws_cognito_identity_provider" "google" {
 
   # only create if client ID is defined
   count = var.google_credentials.client_id != null ? 1 : 0
+
+  depends_on = [
+    aws_cognito_user_pool.pool
+  ]
 }

@@ -16,7 +16,7 @@ resource "aws_cognito_user_pool_client" "api" {
   prevent_user_existence_errors                 = "ENABLED"
   read_attributes                               = ["address", "birthdate", "email", "email_verified", "family_name", "gender", "given_name", "locale", "middle_name", "name", "nickname", "phone_number", "phone_number_verified", "picture", "preferred_username", "profile", "updated_at", "website", "zoneinfo"]
   refresh_token_validity                        = "30"
-  supported_identity_providers                  = ["Google", "Linkedin"]
+  supported_identity_providers                  = ["Google", "Linkedin", "Github"]
 
   token_validity_units {
     access_token  = "minutes"

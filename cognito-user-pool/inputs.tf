@@ -44,6 +44,12 @@ variable "google_credentials" {
   default     = {}
 }
 
+variable "github_credentials" {
+  description = "GitHub OAuth settings"
+  type        = map(string)
+  default     = {}
+}
+
 # Custom domain
 variable "route53_zone_domain" {
   default     = ""
