@@ -68,11 +68,12 @@ resource "aws_cognito_identity_provider" "github" {
 }
 
 module "github_lambda_function" {
-  source = "./github"
-  pool_name = var.pool_name
+  source             = "./github"
+  pool_name          = var.pool_name
   github_credentials = var.github_credentials
-  
-  count  = var.github_credentials.client_id != null ? 1 : 0
+  stage              = var.stage
+
+  count = var.github_credentials.client_id != null ? 1 : 0
 }
 
 resource "aws_cognito_identity_provider" "google" {

@@ -21,11 +21,12 @@ In most cases, the price will be near to zero. Cognito have a free tier until 50
 
 ## Preconfigured providers
 
-| Provider                                                                                                           | Provider type | Variable                                                          |
-| ------------------------------------------------------------------------------------------------------------------ | ------------- | ----------------------------------------------------------------- |
-| ![Google](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)              | Google        | `google_credentials   = { client_id = "", client_secret = "" }`   |
-| ![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white) | OIDC          | `linkedin_credentials   = { client_id = "", client_secret = "" }` |
-| Login via form                                                                                                     | Cognito       |                                                                   |
+| Provider                                                                                                           | Provider type             | Variable                                                          |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------- | ----------------------------------------------------------------- |
+| ![Google](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)              | Google                    | `google_credentials   = { client_id = "", client_secret = "" }`   |
+| ![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white) | OIDC                      | `linkedin_credentials   = { client_id = "", client_secret = "" }` |
+| ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)       | OIDC with Lambda as proxy | `github_credentials   = { client_id = "", client_secret = "" }`   |
+| Login via form                                                                                                     | Cognito                   |                                                                   |
 
 > The identity will be configured only if `client_id` is defined.
 
@@ -46,6 +47,7 @@ callback_urls = ["https://..."]
 # Identity provider settings
 linkedin_credentials = { client_id = "<your-client-id>", client_secret = "<your-secret>" }
 google_credentials   = { client_id = "<your-client-id>", client_secret = "<your-secret>" }
+github_credentials   = { client_id = "<your-client-id>", client_secret = "<your-secret>" }
 
 # User groups
 user_groups = [{  name = "super-admins", description = "Super admin users" }]

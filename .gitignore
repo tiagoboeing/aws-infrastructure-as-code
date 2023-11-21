@@ -4,3 +4,7 @@
 *.lock.*
 *.tfstate
 *.tfvars
+lambda_function_payload.zip
+
+# NodeJS
+node_modules/
