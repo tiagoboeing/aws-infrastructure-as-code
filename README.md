@@ -1,13 +1,14 @@
-# AWS + Terraform (IaC)
+# Infrastructure as Code (IaC) for AWS
 
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
-
-IaC stacks with Terraform for Amazon Web Services (AWS).
+Infrastructure as Code (IaC) stacks for Amazon Web Services (AWS).
 
 ## Infrastructures
 
-- [Cognito User Pool with Identity Providers](./cognito-user-pool)
+![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+
+- [Cognito User Pool with Identity Providers](./cognito-user-pool) [Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 - [CDN on custom domain with CloudFront, S3, Route53 and Certificate Manager](./cloudfront-cdn)
 
 Each infrastructure has its own README with instructions.

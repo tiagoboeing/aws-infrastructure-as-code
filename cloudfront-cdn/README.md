@@ -1,5 +1,8 @@
 # CloudFront CDN with custom domain
 
+![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+
+
 **[Live example](https://terraform-cdn.tiagoboeing.com/)** | **[API Docs](./api-docs.md)**
 
 > Tested with custom subdomain.
