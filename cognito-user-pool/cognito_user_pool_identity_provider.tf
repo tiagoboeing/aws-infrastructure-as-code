@@ -51,19 +51,20 @@ resource "aws_cognito_identity_provider" "github" {
     client_secret                 = var.github_credentials.client_secret
     authorize_scopes              = "user openid"
     attributes_request_method     = "GET"
-    attributes_url                = "https://api.github.com/user"
     attributes_url_add_attributes = "false"
     authorize_url                 = "https://github.com/login/oauth/authorize"
     oidc_issuer                   = "https://www.github.com"
-    jwks_uri                      = "https://github.com/login/oauth/access_token"
-    token_url                     = "https://github.com/login/oauth/access_token"
+    attributes_url                = "${local.github_api_gateway_endpoint}/oauth/user"
+    jwks_uri                      = "${local.github_api_gateway_endpoint}/oauth/access_token"
+    token_url                     = "${local.github_api_gateway_endpoint}/oauth/access_token"
   }
 
   # only create if client ID is defined
   count = var.github_credentials.client_id != null ? 1 : 0
 
   depends_on = [
-    aws_cognito_user_pool.pool
+    aws_cognito_user_pool.pool,
+    module.github_lambda_function
   ]
 }
 

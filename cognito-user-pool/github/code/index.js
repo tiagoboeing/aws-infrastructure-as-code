@@ -1,11 +1,17 @@
+/**
+ * Based on this article: https://blog.ducthinh.net/github-openid-idp-aws-cognito/
+ */
 const axios = require('axios')
 
 async function userInfo(event) {
   console.log('Handling userInfo...')
 
+  if (!event.headers?.authorization)
+    throw new Error('Header Authorization must be passed!')
+
   const response = await axios.get('https://api.github.com/user', {
     headers: {
-      Authorization: 'token ' + event.headers.authorization.split('Bearer ')[1],
+      Authorization: 'token ' + event.headers?.authorization?.split('Bearer ')[1],
       Accept: 'application/json'
     },
     maxRedirects: 0
@@ -43,25 +49,26 @@ async function accessToken(event) {
 
 exports.handler = async (event) => {
   try {
+    console.log('Handling event...')
+    console.log(event)
+
     const {
-      requestContext: {
-        http: { method, path }
-      }
+      httpMethod,
+      pathParameters: { proxy: path }
     } = event
 
-    console.log('requestContext', requestContext)
-
-    if (method === 'POST' && path === '/oauth/github/access-token')
+    if (httpMethod === 'POST' && path === 'oauth/access_token')
       return await accessToken(event)
 
-    if (method === 'GET' && path === '/oauth/github/user-info')
-      return await userInfo(event)
+    if (httpMethod === 'GET' && path === 'oauth/user') return await userInfo(event)
 
     return {
       statusCode: 404,
-      body: 'Not Found'
+      body: JSON.stringify({ message: 'Route not found' })
     }
   } catch (error) {
+    console.error(error)
+
     return {
       statusCode: error?.response?.status || 500,
       body: JSON.stringify(error?.response?.data || {})

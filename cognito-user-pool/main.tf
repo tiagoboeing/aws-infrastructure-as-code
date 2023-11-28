@@ -1,7 +1,8 @@
 locals {
-  stage                = var.stage != "" ? var.stage : "dev"
-  resource_prefix_name = "${var.pool_name}-${var.stage}"
-  route53_base_domain  = var.route53_zone_domain
+  stage                       = var.stage != "" ? var.stage : "dev"
+  resource_prefix_name        = "${var.pool_name}-${var.stage}"
+  route53_base_domain         = var.route53_zone_domain
+  github_api_gateway_endpoint = module.github_lambda_function[0].github_api_gateway_endpoint
 }
 
 
