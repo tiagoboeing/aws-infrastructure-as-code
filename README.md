@@ -8,7 +8,7 @@ Infrastructure as Code (IaC) stacks for Amazon Web Services (AWS).
 
 ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 
-- [Cognito User Pool with Identity Providers](./cognito-user-pool) [Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+- [Cognito User Pool with Identity Providers (social logins)](./cognito-user-pool)
 - [CDN on custom domain with CloudFront, S3, Route53 and Certificate Manager](./cloudfront-cdn)
 
 Each infrastructure has its own README with instructions.
