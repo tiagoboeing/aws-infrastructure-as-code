@@ -8,6 +8,7 @@ resource "aws_cognito_identity_provider" "linkedin" {
     email       = "email"
     family_name = "family_name"
     given_name  = "given_name"
+    picture     = "picture"
     username    = "sub"
   }
 
