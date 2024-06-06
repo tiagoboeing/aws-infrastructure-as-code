@@ -26,7 +26,7 @@ resource "aws_cognito_identity_provider" "linkedin" {
   }
 
   # only create if client ID is defined
-  count = var.linkedin_credentials.client_id != null ? 1 : 0
+  count = length(var.linkedin_credentials) > 0 ? 1 : 0
 }
 
 resource "aws_cognito_identity_provider" "google" {
