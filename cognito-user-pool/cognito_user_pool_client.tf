@@ -16,8 +16,13 @@ resource "aws_cognito_user_pool_client" "api" {
   prevent_user_existence_errors                 = "ENABLED"
   read_attributes                               = ["address", "birthdate", "email", "email_verified", "family_name", "gender", "given_name", "locale", "middle_name", "name", "nickname", "phone_number", "phone_number_verified", "picture", "preferred_username", "profile", "updated_at", "website", "zoneinfo"]
   refresh_token_validity                        = "30"
-  supported_identity_providers                  = ["COGNITO", "Google", "Linkedin"]
   generate_secret                               = true
+
+  supported_identity_providers = compact([
+    "COGNITO",
+    length(var.google_credentials) > 0 ? "Google" : null,
+    length(var.linkedin_credentials) > 0 ? "Linkedin" : null
+  ])
 
   token_validity_units {
     access_token  = "minutes"
@@ -26,9 +31,4 @@ resource "aws_cognito_user_pool_client" "api" {
   }
 
   write_attributes = ["address", "birthdate", "email", "family_name", "gender", "given_name", "locale", "middle_name", "name", "nickname", "phone_number", "picture", "preferred_username", "profile", "updated_at", "website", "zoneinfo"]
-
-  depends_on = [
-    aws_cognito_identity_provider.google,
-    aws_cognito_identity_provider.linkedin
-  ]
 }
