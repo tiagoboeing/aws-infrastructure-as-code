@@ -1,23 +1,17 @@
-data "terraform_remote_state" "alb" {
-  backend = "local"
-
-  config = {
-    path = "../../../generated/aws/alb/terraform.tfstate"
-  }
+variable "service_name" {
+  description = "Service name used for tagging"
+  type        = string
+  nullable    = false
 }
 
-data "terraform_remote_state" "sg" {
-  backend = "local"
-
-  config = {
-    path = "../../../generated/aws/sg/terraform.tfstate"
-  }
+variable "public_subnet_ids" {
+  description = "List of public subnet IDs"
+  type        = list(string)
+  nullable    = false
 }
 
-data "terraform_remote_state" "subnet" {
-  backend = "local"
-
-  config = {
-    path = "../../../generated/aws/subnet/terraform.tfstate"
-  }
+variable "alb_security_group_id" {
+  description = "ALB security group ID (traffic from internet to ALB)"
+  type        = string
+  nullable    = false
 }
