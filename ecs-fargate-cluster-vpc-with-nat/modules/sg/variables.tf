@@ -1,7 +1,11 @@
-data "terraform_remote_state" "sg" {
-  backend = "local"
+variable "vpc_id" {
+  description = "The VPC ID"
+  type        = string
+  nullable    = false
+}
 
-  config = {
-    path = "../../../generated/aws/sg/terraform.tfstate"
-  }
+variable "service_name" {
+  description = "Service name used for tagging"
+  type        = string
+  nullable    = false
 }

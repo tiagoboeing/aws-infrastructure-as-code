@@ -1,105 +1,91 @@
-resource "aws_security_group" "tfer--default_sg-081dec66d10aa80e3" {
-  description = "default VPC security group"
+resource "aws_security_group" "default" {
+  vpc_id      = var.vpc_id
+  name        = "${var.service_name}-sg-default"
+  description = "Default VPC security group"
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "0"
+    from_port   = 0
     protocol    = "-1"
     self        = "false"
-    to_port     = "0"
+    to_port     = 0
   }
 
   ingress {
-    from_port = "0"
+    from_port = 0
     protocol  = "-1"
     self      = "true"
-    to_port   = "0"
+    to_port   = 0
   }
-
-  name   = "default"
-  vpc_id = "vpc-0f2f0fc8f728581b0"
 }
 
-resource "aws_security_group" "tfer--dev-cluster-sg_sg-0d4a5613afce6a981" {
-  description = "Allow access from internet"
+resource "aws_security_group" "cluster_from_internet_to_alb" {
+  vpc_id      = var.vpc_id
+  name        = "${var.service_name}-sg-from-internet-to-alb"
+  description = "Allow incoming traffic from internet to the ALB"
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "0"
+    from_port   = 0
     protocol    = "-1"
     self        = "false"
-    to_port     = "0"
+    to_port     = 0
   }
 
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "3000"
+    from_port   = 443
     protocol    = "tcp"
     self        = "false"
-    to_port     = "3000"
+    to_port     = 443
   }
 
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "443"
+    from_port   = 80
     protocol    = "tcp"
     self        = "false"
-    to_port     = "443"
+    to_port     = 80
   }
 
+  # Application port
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "80"
+    from_port   = 3000
     protocol    = "tcp"
     self        = "false"
-    to_port     = "80"
-  }
-
-  name = "dev-cluster-sg"
-
-  tags = {
-    Name    = "Traffic from internet"
-    service = "cluster-dev"
+    to_port     = 3000
   }
 
   tags_all = {
-    Name    = "Traffic from internet"
-    service = "cluster-dev"
+    Name    = "Allow incoming traffic from internet to the ALB"
+    service = var.service_name
   }
-
-  vpc_id = "vpc-0f2f0fc8f728581b0"
 }
 
-resource "aws_security_group" "tfer--ecs-sports-api_sg-017930792a1347fcb" {
-  description = "Created in ECS Console"
+resource "aws_security_group" "cluster_from_alb_to_ecs" {
+  vpc_id      = var.vpc_id
+  name        = "${var.service_name}-sg-from-alb-to-ecs"
+  description = "Traffic from ALB to ECS"
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "0"
+    from_port   = 0
     protocol    = "-1"
     self        = "false"
-    to_port     = "0"
+    to_port     = 0
   }
 
   ingress {
-    from_port       = "0"
+    from_port       = 0
     protocol        = "-1"
-    security_groups = ["${data.terraform_remote_state.sg.outputs.aws_security_group_tfer--dev-cluster-sg_sg-0d4a5613afce6a981_id}"]
+    security_groups = [aws_security_group.cluster_from_internet_to_alb.id]
     self            = "false"
-    to_port         = "0"
-  }
-
-  name = "ecs-sports-api"
-
-  tags = {
-    Name    = "Traffic from ALB to app"
-    service = "cluster-dev"
+    to_port         = 0
   }
 
   tags_all = {
-    Name    = "Traffic from ALB to app"
-    service = "cluster-dev"
+    Name    = "Traffic from ALB to ECS"
+    service = var.service_name
   }
-
-  vpc_id = "vpc-0f2f0fc8f728581b0"
 }

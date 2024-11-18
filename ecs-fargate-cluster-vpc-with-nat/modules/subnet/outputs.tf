@@ -1,15 +1,17 @@
-output "aws_subnet_tfer--subnet-0141cfa4c3a5f4896_id" {
-  value = "${aws_subnet.tfer--subnet-0141cfa4c3a5f4896.id}"
+# Public Subnets
+output "aws_subnet_public1_az_1a_id" {
+  value = aws_subnet.public1_az_1a.id
 }
 
-output "aws_subnet_tfer--subnet-0365bb50aa233f7b4_id" {
-  value = "${aws_subnet.tfer--subnet-0365bb50aa233f7b4.id}"
+output "aws_subnet_public2_az_1b_id" {
+  value = aws_subnet.public2_az_1b.id
 }
 
-output "aws_subnet_tfer--subnet-0496cf678e8d69b22_id" {
-  value = "${aws_subnet.tfer--subnet-0496cf678e8d69b22.id}"
+# Private Subnets
+output "aws_subnet_private1_az_1a_id" {
+  value = aws_subnet.private1_az_1a.id
 }
 
-output "aws_subnet_tfer--subnet-0a6d91f87b68a4d68_id" {
-  value = "${aws_subnet.tfer--subnet-0a6d91f87b68a4d68.id}"
+output "aws_subnet_private2_az_1b_id" {
+  value = aws_subnet.private2_az_1b.id
 }

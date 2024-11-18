@@ -27,6 +27,38 @@ The provisioned resources follow the diagram below (created by Cleber Gasparotto
 - Amazon Certificate Manager
   - Custom SSL Certificate
 
+### VPC + subnets
+
+> [!NOTE]
+> 
+> VPC CIDR block: `10.0.0.0/16`
+
+The VPC will be created with the following subnets:
+
+- Availability Zone 1 (`us-east-1a`)
+  - Public Subnet (CIDR block: `10.0.0.0/20`)
+  - Private Subnet (CIDR block: `10.0.128.0/20`)
+- Availability Zone 2 (`us-east-1b`)
+  - Public Subnet (CIDR block: `10.0.16.0/20`)
+  - Private Subnet (CIDR block: `10.0.144.0/20`)
+
+To change CIDR blocks or edit other settings, go to the following folder modules:
+
+- VPC module: [`modules/vpc`](./modules/vpc)
+- Subnets module: [`modules/subnet`](./modules/subnet)
+
+### Security Groups
+
+- `default` 
+  - Allow all outbound traffic from the VPC
+  - Allow all inbound traffic from the VPC
+- `cluster_from_internet_to_alb` 
+  - Allow inbound traffic from the Internet to the Application Load Balancer (ports 80, 443 and 3000)
+  - Allow outbound traffic to the Internet
+- `cluster_from_alb_to_ecs` 
+  - Allow inbound traffic from the Application Load Balancer to the ECS Cluster
+  - Allow outbound traffic to the Internet
+
 ### Tags
 
 This project will apply the following tags to all resources:
