@@ -16,17 +16,19 @@ resource "aws_resourcegroups_group" "service" {
   resource_query {
     query = <<JSON
     {
-      resource_type = "AWS::AllSupported"
-      tag_filters {
-        key    = "service"
-        values = [${local.service_full_name}]
-      }
+      "ResourceTypeFilters": ["AWS::AllSupported"],
+      "TagFilters": [
+        {
+          "Key": "service",
+          "Values": ["${local.service_full_name}"]
+        }
+      ]
     }
-  JSON
+    JSON
   }
 
   tags = {
-    name = "${local.service_full_name}-rg"
+    Name = "${local.service_full_name}-rg"
   }
 }
 
@@ -101,13 +103,13 @@ module "security_group" {
 }
 
 module "elastic_ip" {
-  source                   = "./modules/elastic_ip"
-  service_name             = local.service_full_name
-  region                   = var.region
-  network_interface_az1_id = module.nat.aws_nat_gateway_nat_1_network_interface_id
-  network_interface_az2_id = module.nat.aws_nat_gateway_nat_2_network_interface_id
+  source       = "./modules/elastic_ip"
+  service_name = local.service_full_name
+  region       = var.region
+  # network_interface_az1_id = module.nat.aws_nat_gateway_nat_1_network_interface_id
+  # network_interface_az2_id = module.nat.aws_nat_gateway_nat_2_network_interface_id
 
-  depends_on = [module.nat]
+  # depends_on = [module.nat]
 
   providers = {
     aws = aws
@@ -115,12 +117,17 @@ module "elastic_ip" {
 }
 
 module "nat" {
-  source             = "./modules/nat"
-  service_name       = local.service_full_name
-  public_subnet_id_1 = module.subnet.aws_subnet_public1_az_1a_id
-  public_subnet_id_2 = module.subnet.aws_subnet_public2_az_1b_id
+  source                     = "./modules/nat"
+  service_name               = local.service_full_name
+  public_subnet_id_1         = module.subnet.aws_subnet_public1_az_1a_id
+  public_subnet_id_2         = module.subnet.aws_subnet_public2_az_1b_id
+  elastic_ip_1_allocation_id = module.elastic_ip.aws_eip_1_allocation_id
+  elastic_ip_2_allocation_id = module.elastic_ip.aws_eip_2_allocation_id
 
-  depends_on = [module.subnet]
+  depends_on = [
+    module.subnet,
+    module.elastic_ip
+  ]
 
   providers = {
     aws = aws

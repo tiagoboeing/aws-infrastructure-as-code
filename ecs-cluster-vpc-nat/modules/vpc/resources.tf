@@ -7,6 +7,6 @@ resource "aws_vpc" "main" {
   instance_tenancy                     = "default"
 
   tags = {
-    name = "${var.service_name}-vpc"
+    Name = "${var.service_name}-vpc"
   }
 }

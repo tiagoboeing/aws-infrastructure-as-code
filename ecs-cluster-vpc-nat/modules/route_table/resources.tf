@@ -2,14 +2,14 @@ resource "aws_route_table" "main" {
   vpc_id = var.vpc_id
 
   tags = {
-    name = "cluster-dev-rtb-main"
+    Name = "cluster-dev-rtb-main"
   }
 }
 
-resource "aws_main_route_table_association" "main" {
-  route_table_id = aws_route_table.main.id
-  vpc_id         = var.vpc_id
-}
+# resource "aws_main_route_table_association" "main" {
+#   route_table_id = aws_route_table.main.id
+#   vpc_id         = var.vpc_id
+# }
 
 # Public
 resource "aws_route_table" "public" {
@@ -20,7 +20,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    name = "${var.service_name}-rtb-public"
+    Name = "${var.service_name}-rtb-public"
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_route_table" "private1" {
   }
 
   tags = {
-    name = "${var.service_name}-rtb-private1-${var.az_1}"
+    Name = "${var.service_name}-rtb-private1-${var.az_1}"
   }
 }
 
@@ -63,7 +63,7 @@ resource "aws_route_table" "private2" {
   }
 
   tags = {
-    name = "${var.service_name}-rtb-private2-${var.az_2}"
+    Name = "${var.service_name}-rtb-private2-${var.az_2}"
   }
 }
 

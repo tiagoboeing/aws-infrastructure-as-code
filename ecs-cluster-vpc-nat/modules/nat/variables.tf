@@ -15,3 +15,15 @@ variable "public_subnet_id_2" {
   type        = string
   nullable    = false
 }
+
+variable "elastic_ip_1_allocation_id" {
+  description = "Elastic IP 1 allocation ID"
+  type        = string
+  nullable    = false
+}
+
+variable "elastic_ip_2_allocation_id" {
+  description = "Elastic IP 2 allocation ID"
+  type        = string
+  nullable    = false
+}

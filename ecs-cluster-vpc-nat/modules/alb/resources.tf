@@ -21,8 +21,6 @@ resource "aws_lb" "cluster_alb" {
     var.alb_security_group_id
   ]
 
-  subnets = var.public_subnet_ids
-
   dynamic "subnet_mapping" {
     for_each = var.public_subnet_ids
     content {
@@ -31,7 +29,7 @@ resource "aws_lb" "cluster_alb" {
   }
 
   tags = {
-    name = "${var.service_name}-alb"
+    Name = "${var.service_name}-alb"
   }
 }
 
@@ -82,7 +80,7 @@ resource "aws_lb_target_group" "ecs_cluster" {
 
 
   tags = {
-    name = "${var.service_name}-tg"
+    Name = "${var.service_name}-tg"
   }
 }
 
@@ -119,7 +117,7 @@ resource "aws_lb_listener" "https" {
   }
 
   tags = {
-    name = "${var.service_name}-lb-listener-https"
+    Name = "${var.service_name}-lb-listener-https"
   }
 }
 
@@ -143,6 +141,6 @@ resource "aws_lb_listener" "http" {
   }
 
   tags = {
-    name = "${var.service_name}-lb-listener-http"
+    Name = "${var.service_name}-lb-listener-http"
   }
 }

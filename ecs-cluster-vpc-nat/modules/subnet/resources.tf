@@ -11,7 +11,7 @@ resource "aws_subnet" "public1_az_1a" {
   availability_zone                              = var.az_1
 
   tags = {
-    name = "${var.service_name}-subnet-public1-${var.az_1}"
+    Name = "${var.service_name}-subnet-public1-${var.az_1}"
   }
 }
 
@@ -27,7 +27,7 @@ resource "aws_subnet" "private1_az_1a" {
   availability_zone                              = var.az_1
 
   tags = {
-    name = "${var.service_name}-subnet-private1-${var.az_1}"
+    Name = "${var.service_name}-subnet-private1-${var.az_1}"
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_subnet" "public2_az_1b" {
   availability_zone                              = var.az_2
 
   tags = {
-    name = "${var.service_name}-subnet-public2-${var.az_2}"
+    Name = "${var.service_name}-subnet-public2-${var.az_2}"
   }
 }
 
@@ -60,6 +60,6 @@ resource "aws_subnet" "private2_az_1b" {
   availability_zone                              = var.az_2
 
   tags = {
-    name = "${var.service_name}-subnet-private2-${var.az_2}"
+    Name = "${var.service_name}-subnet-private2-${var.az_2}"
   }
 }

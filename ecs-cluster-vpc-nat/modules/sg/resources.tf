@@ -19,7 +19,7 @@ resource "aws_security_group" "default" {
   }
 
   tags = {
-    name = "Default VPC security group"
+    Name = "Default VPC security group"
   }
 }
 
@@ -62,7 +62,7 @@ resource "aws_security_group" "cluster_from_internet_to_alb" {
   }
 
   tags = {
-    name = "Allow incoming traffic from internet to the ALB"
+    Name = "Allow incoming traffic from internet to the ALB"
   }
 }
 
@@ -88,6 +88,6 @@ resource "aws_security_group" "cluster_from_alb_to_ecs" {
   }
 
   tags = {
-    name = "Traffic from ALB to ECS"
+    Name = "Traffic from ALB to ECS"
   }
 }

@@ -15,9 +15,9 @@ provider "aws" {
 
   default_tags {
     tags = {
-      service      = local.service_full_name # Will be: ${service_name}-${stage}
-      service_name = var.service_name
-      stage        = var.stage
+      Service     = local.service_full_name # Will be: ${service_name}-${stage}
+      ServiceName = var.service_name
+      Stage       = var.stage
     }
   }
 }
