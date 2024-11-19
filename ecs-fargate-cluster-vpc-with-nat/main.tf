@@ -154,6 +154,15 @@ module "route_table" {
 }
 
 # Application
+module "ecs" {
+  source       = "./modules/ecs"
+  service_name = local.service_full_name
+
+  providers = {
+    aws = aws
+  }
+}
+
 module "alb" {
   source                = "./modules/alb"
   service_name          = local.service_full_name
@@ -177,11 +186,4 @@ module "alb" {
     aws = aws
   }
 }
-
-# module "ecs" {
-#   source  = "./modules/ecs"
-#   region  = var.region
-#   alb_arn = module.alb.aws_lb_tfer--alb-0f2f0fc8f728581b0_arn
-#   ecr_id  = module.ecr.aws_ecr_repository_tfer--ecs-0f2f0fc8f728581b0_id
-# }
 

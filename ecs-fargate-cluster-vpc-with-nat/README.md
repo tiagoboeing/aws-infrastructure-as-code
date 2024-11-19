@@ -81,3 +81,17 @@ This project will apply the following tags to all resources:
 ## Requirements
 
 - Before starting, you need to have a Route53 hosted zone in your AWS account.
+
+## Own domain
+
+To use your own domain, go to the Route53 and create a alias for the Application Load Balancer (ALB).
+
+- Record name: `choose-a-domain`.your-domain.com (use the same domain you used on the ACM certificate)
+- Record type: `A - Routes traffic to an IPv4 address and some AWS resources`
+- Alias: `Yes`
+- Route traffic to: `Alias to Application and Classic Load Balancer`
+  - Region: `us-east-1` (or the region you are using)
+  - Select the ALB created by this project
+- Routing policy: `Simple`
+- Evaluate target health: `Yes`
+- **Save the record**
