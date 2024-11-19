@@ -1,13 +1,8 @@
-resource "aws_internet_gateway" "tfer--igw-04d91dd1a28a48fed" {
-  tags = {
-    Name    = "cluster-dev-igw"
-    service = "cluster-dev"
-  }
+resource "aws_internet_gateway" "default" {
+  vpc_id = var.vpc_id
 
   tags_all = {
-    Name    = "cluster-dev-igw"
-    service = "cluster-dev"
+    name    = "${var.service_name}-igw-default"
+    service = var.service_name
   }
-
-  vpc_id = "${data.terraform_remote_state.vpc.outputs.aws_vpc_tfer--vpc-0f2f0fc8f728581b0_id}"
 }

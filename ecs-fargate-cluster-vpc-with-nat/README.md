@@ -16,14 +16,20 @@ The provisioned resources follow the diagram below (created by Cleber Gasparotto
 
 ## Stack
 
+> [!IMPORTANT]
+>
+> **Check the pricing of the resources before deploying them.** ECS Fargate Cluster and NAT Gateway are not free. 
+> 
+> You will be charged for Elastic IPs, NAT Gateway and the resources running on the ECS Cluster.
+
 - ECS Fargate Cluster (free, pay-per-use)
 - VPC (CIDR block fixed on `10.0.0.0/16` range to easily control this project, change it if needed)
   - Subnets - 2 Availabity Zones with 1 public subnet + 1 private subnet each
   - Security Groups
   - Route Tables
   - Internet Gateway
-  - NAT Gateway
-  - Elastic IP 
+  - NAT Gateway (1 per Availability Zone)
+  - Elastic IP (1 per NAT Gateway)
 - Amazon Certificate Manager
   - Custom SSL Certificate
 

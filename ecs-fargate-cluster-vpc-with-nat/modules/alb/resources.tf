@@ -35,113 +35,105 @@ resource "aws_lb" "cluster_alb" {
   }
 }
 
+# Target group
+resource "aws_lb_target_group" "ecs_cluster" {
+  vpc_id                            = var.vpc_id
+  name                              = "${var.service_name}-tg"
+  port                              = "80"
+  protocol                          = "HTTP"
+  protocol_version                  = "HTTP1"
+  target_type                       = "ip"
+  ip_address_type                   = "ipv4"
+  load_balancing_algorithm_type     = "round_robin"
+  load_balancing_anomaly_mitigation = "off"
+  load_balancing_cross_zone_enabled = "use_load_balancer_configuration"
+  slow_start                        = "0"
+  deregistration_delay              = "300"
+
+  health_check {
+    enabled             = "true"
+    healthy_threshold   = "5"
+    interval            = "60"
+    matcher             = "200-299"
+    path                = "/health"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = "10"
+    unhealthy_threshold = "2"
+  }
+
+  stickiness {
+    cookie_duration = "86400"
+    enabled         = "false"
+    type            = "lb_cookie"
+  }
+
+  tags_all = {
+    service = var.service_name
+  }
+
+  target_group_health {
+    dns_failover {
+      minimum_healthy_targets_count      = "1"
+      minimum_healthy_targets_percentage = "off"
+    }
+
+    unhealthy_state_routing {
+      minimum_healthy_targets_count      = "1"
+      minimum_healthy_targets_percentage = "off"
+    }
+  }
+}
+
+
 # Listener
-# resource "aws_lb_listener" "tfer--arn-003A-aws-003A-elasticloadbalancing-003A-us-east-1-003A-847640070182-003A-listener-002F-app-002F-dev-cluster-alb-002F-7b21294c5800c638-002F-6b8400842213cab1" {
-#   default_action {
-#     order = "1"
+resource "aws_lb_listener" "https" {
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = var.certificate_arn
+  load_balancer_arn = aws_lb.cluster_alb.arn
 
-#     redirect {
-#       host        = "#{host}"
-#       path        = "/#{path}"
-#       port        = "#{port}"
-#       protocol    = "HTTPS"
-#       query       = "#{query}"
-#       status_code = "HTTP_301"
-#     }
+  default_action {
+    order            = "1"
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.ecs_cluster.arn
 
-#     type = "redirect"
-#   }
+    forward {
+      stickiness {
+        duration = "3600"
+        enabled  = "false"
+      }
 
-#   load_balancer_arn = data.terraform_remote_state.alb.outputs.aws_lb_tfer--dev-cluster-alb_id
-#   port              = "80"
-#   protocol          = "HTTP"
-# }
+      target_group {
+        arn    = aws_lb_target_group.ecs_cluster.arn
+        weight = "1"
+      }
+    }
+  }
 
-# resource "aws_lb_listener" "tfer--arn-003A-aws-003A-elasticloadbalancing-003A-us-east-1-003A-847640070182-003A-listener-002F-app-002F-dev-cluster-alb-002F-7b21294c5800c638-002F-bcf6ff67b07bc8c2" {
-#   certificate_arn = "arn:aws:acm:us-east-1:847640070182:certificate/af384c67-3f26-41c7-857e-dea850a07b4d"
+  mutual_authentication {
+    ignore_client_certificate_expiry = "false"
+    mode                             = "off"
+  }
+}
 
-#   default_action {
-#     forward {
-#       stickiness {
-#         duration = "3600"
-#         enabled  = "false"
-#       }
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.cluster_alb.arn
+  port              = "80"
+  protocol          = "HTTP"
 
-#       target_group {
-#         arn    = "arn:aws:elasticloadbalancing:us-east-1:847640070182:targetgroup/dev-cluster-tg/d1e1bd847f566150"
-#         weight = "1"
-#       }
-#     }
+  default_action {
+    order = "1"
+    type  = "redirect"
 
-#     order            = "1"
-#     target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:847640070182:targetgroup/dev-cluster-tg/d1e1bd847f566150"
-#     type             = "forward"
-#   }
-
-#   load_balancer_arn = data.terraform_remote_state.alb.outputs.aws_lb_tfer--dev-cluster-alb_id
-
-#   mutual_authentication {
-#     ignore_client_certificate_expiry = "false"
-#     mode                             = "off"
-#   }
-
-#   port       = "443"
-#   protocol   = "HTTPS"
-#   ssl_policy = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-# }
-
-# # Target group
-# resource "aws_lb_target_group" "tfer--dev-cluster-tg" {
-#   deregistration_delay = "300"
-
-#   health_check {
-#     enabled             = "true"
-#     healthy_threshold   = "5"
-#     interval            = "60"
-#     matcher             = "200-299"
-#     path                = "/health"
-#     port                = "traffic-port"
-#     protocol            = "HTTP"
-#     timeout             = "10"
-#     unhealthy_threshold = "2"
-#   }
-
-#   ip_address_type                   = "ipv4"
-#   load_balancing_algorithm_type     = "round_robin"
-#   load_balancing_anomaly_mitigation = "off"
-#   load_balancing_cross_zone_enabled = "use_load_balancer_configuration"
-#   name                              = "dev-cluster-tg"
-#   port                              = "80"
-#   protocol                          = "HTTP"
-#   protocol_version                  = "HTTP1"
-#   slow_start                        = "0"
-
-#   stickiness {
-#     cookie_duration = "86400"
-#     enabled         = "false"
-#     type            = "lb_cookie"
-#   }
-
-#   tags = {
-#     service = "cluster-dev"
-#   }
-
-#   tags_all = {
-#     service = "cluster-dev"
-#   }
-
-#   target_group_health {
-#     dns_failover {
-#       minimum_healthy_targets_count      = "1"
-#       minimum_healthy_targets_percentage = "off"
-#     }
-
-#     unhealthy_state_routing {
-#       minimum_healthy_targets_count      = "1"
-#       minimum_healthy_targets_percentage = "off"
-#     }
-#   }
-
-#   target_type = "ip"
-#   vpc_id      = "vpc-0f2f0fc8f728581b0"
-# }
+    redirect {
+      host        = "#{host}"
+      path        = "/#{path}"
+      port        = "#{port}"
+      protocol    = "HTTPS"
+      query       = "#{query}"
+      status_code = "HTTP_301"
+    }
+  }
+}

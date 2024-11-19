@@ -35,23 +35,6 @@ module "ecr" {
 #   ecr_id  = module.ecr.aws_ecr_repository_tfer--ecs-0f2f0fc8f728581b0_id
 # }
 
-# module "igw" {
-#   source = "./modules/igw"
-#   region = var.region
-# }
-
-# module "nat" {
-#   source = "./modules/nat"
-#   region = var.region
-#   vpc_id = module.vpc.aws_vpc_tfer--vpc-0f2f0fc8f728581b0_id
-# }
-
-# module "route_table" {
-#   source = "./modules/route-table"
-#   region = var.region
-#   vpc_id = module.vpc.aws_vpc_tfer--vpc-0f2f0fc8f728581b0_id
-#   igw_id = module.igw.aws_internet_gateway_tfer--igw-0f2f0fc8f728581b0_id
-# }
 
 # Network
 module "vpc" {
@@ -75,6 +58,16 @@ module "subnet" {
   }
 }
 
+module "igw" {
+  source       = "./modules/igw"
+  service_name = local.service_name
+  vpc_id       = module.vpc.aws_vpc_id
+
+  providers = {
+    aws = aws
+  }
+}
+
 module "security_group" {
   source       = "./modules/sg"
   vpc_id       = module.vpc.aws_vpc_id
@@ -89,6 +82,8 @@ module "alb" {
   source                = "./modules/alb"
   service_name          = local.service_name
   alb_security_group_id = module.security_group.aws_security_group_cluster_from_internet_to_alb_id
+  certificate_arn       = module.acm.aws_acm_certificate_arn
+  vpc_id                = module.vpc.aws_vpc_id
 
   public_subnet_ids = [
     module.subnet.aws_subnet_public1_az_1a_id,
@@ -99,3 +94,21 @@ module "alb" {
     aws = aws
   }
 }
+
+module "nat" {
+  source             = "./modules/nat"
+  service_name       = local.service_name
+  public_subnet_id_1 = module.subnet.aws_subnet_public1_az_1a_id
+  public_subnet_id_2 = module.subnet.aws_subnet_public2_az_1b_id
+
+  providers = {
+    aws = aws
+  }
+}
+
+# module "route_table" {
+#   source = "./modules/route-table"
+#   region = var.region
+#   vpc_id = module.vpc.aws_vpc_tfer--vpc-0f2f0fc8f728581b0_id
+#   igw_id = module.igw.aws_internet_gateway_tfer--igw-0f2f0fc8f728581b0_id
+# }

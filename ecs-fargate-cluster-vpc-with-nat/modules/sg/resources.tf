@@ -58,7 +58,7 @@ resource "aws_security_group" "cluster_from_internet_to_alb" {
   }
 
   tags_all = {
-    Name    = "Allow incoming traffic from internet to the ALB"
+    name    = "Allow incoming traffic from internet to the ALB"
     service = var.service_name
   }
 }
@@ -85,7 +85,7 @@ resource "aws_security_group" "cluster_from_alb_to_ecs" {
   }
 
   tags_all = {
-    Name    = "Traffic from ALB to ECS"
+    name    = "Traffic from ALB to ECS"
     service = var.service_name
   }
 }
