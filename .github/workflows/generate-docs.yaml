@@ -14,7 +14,7 @@ defaults:
     shell: bash
 
 env:
-  FOLDERS: 'cloudfront-cdn;cognito-user-pool,ecs-cluster-vpc-nat'
+  FOLDERS: 'cloudfront-cdn;cognito-user-pool;ecs-cluster-vpc-nat'
 
 jobs:
   generate:
