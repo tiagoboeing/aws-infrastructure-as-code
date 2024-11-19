@@ -82,7 +82,20 @@ This project will apply the following tags to all resources:
 
 - Before starting, you need to have a Route53 hosted zone in your AWS account.
 
-## Own domain
+## Usage
+
+1. Clone this repository
+2. Install Terraform
+3. Create a `terraform.tfvars` and define the variables values (check the [`terraform.tfvars.example`](./terraform.tfvars.example) for reference)
+4. Run the following commands:
+
+```bash
+terraform init
+terraform plan
+terraform apply
+```
+
+### Own domain
 
 To use your own domain, go to the Route53 and create a alias for the Application Load Balancer (ALB).
 
