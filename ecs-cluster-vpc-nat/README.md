@@ -1,8 +1,8 @@
-# ECS Fargate Cluster + VPC with NAT Gateway
+# ECS cluster + VPC + NAT gateway + Internet Gateway
 
 ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 
-Elastic Container Service (ECS) Fargate Cluster with VPC, NAT Gateway, Internet Gateway and custom domain with SSL using Terraform.
+Elastic Container Service (ECS) cluster with VPC, NAT Gateway, Internet Gateway and custom domain (needs to be manually associated) with SSL using Terraform.
 
 **See [API Docs](./api-docs.md) for reference.**
 
