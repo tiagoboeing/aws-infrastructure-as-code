@@ -1,35 +1,44 @@
-output "aws_main_route_table_association_tfer--vpc-0f2f0fc8f728581b0_id" {
-  value = "${aws_main_route_table_association.tfer--vpc-0f2f0fc8f728581b0.id}"
+output "aws_route_table_main_id" {
+  value       = aws_route_table.main.id
+  description = "The ID of the main route table"
 }
 
-output "aws_route_table_association_tfer--subnet-0141cfa4c3a5f4896_id" {
-  value = "${aws_route_table_association.tfer--subnet-0141cfa4c3a5f4896.id}"
+output "aws_main_route_table_association_main_id" {
+  value       = aws_main_route_table_association.main.id
+  description = "The ID of the main route table association"
 }
 
-output "aws_route_table_association_tfer--subnet-0365bb50aa233f7b4_id" {
-  value = "${aws_route_table_association.tfer--subnet-0365bb50aa233f7b4.id}"
+output "aws_route_table_public_id" {
+  value       = aws_route_table.public.id
+  description = "The ID of the public route table"
 }
 
-output "aws_route_table_association_tfer--subnet-0496cf678e8d69b22_id" {
-  value = "${aws_route_table_association.tfer--subnet-0496cf678e8d69b22.id}"
+output "aws_route_table_association_public_az1_id" {
+  value       = aws_route_table_association.public_association_az1.id
+  description = "The ID of the public route table association"
 }
 
-output "aws_route_table_association_tfer--subnet-0a6d91f87b68a4d68_id" {
-  value = "${aws_route_table_association.tfer--subnet-0a6d91f87b68a4d68.id}"
+output "aws_route_table_association_public_az2_id" {
+  value       = aws_route_table_association.public_association_az2.id
+  description = "The ID of the public route table association"
 }
 
-output "aws_route_table_tfer--rtb-02116c1a2ac3bea6c_id" {
-  value = "${aws_route_table.tfer--rtb-02116c1a2ac3bea6c.id}"
+output "aws_route_table_private1_id" {
+  value       = aws_route_table.private1.id
+  description = "The ID of the private route table 1"
 }
 
-output "aws_route_table_tfer--rtb-053279791c0193fe1_id" {
-  value = "${aws_route_table.tfer--rtb-053279791c0193fe1.id}"
+output "aws_route_table_association_private_az1_id" {
+  value       = aws_route_table_association.private_association_az1.id
+  description = "The ID of the private route table association"
 }
 
-output "aws_route_table_tfer--rtb-066cf8a8be4ffce12_id" {
-  value = "${aws_route_table.tfer--rtb-066cf8a8be4ffce12.id}"
+output "aws_route_table_private2_id" {
+  value       = aws_route_table.private2.id
+  description = "The ID of the private route table 2"
 }
 
-output "aws_route_table_tfer--rtb-0baa2d9aaa9035f00_id" {
-  value = "${aws_route_table.tfer--rtb-0baa2d9aaa9035f00.id}"
+output "aws_route_table_association_private_az2_id" {
+  value       = aws_route_table_association.private_association_az2.id
+  description = "The ID of the private route table association"
 }

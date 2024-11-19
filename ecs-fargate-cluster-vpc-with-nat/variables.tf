@@ -1,11 +1,11 @@
 variable "region" {
   default     = "us-east-1"
-  description = "AWS region"
+  description = "AWS region where the resources will be created"
   type        = string
 }
 
-variable "service" {
-  default     = "cluster-dev"
+variable "service_name" {
+  default     = "cluster"
   description = "Service name"
   type        = string
   nullable    = false
@@ -41,4 +41,17 @@ variable "route53_base_domain" {
 variable "route53_private_zone" {
   default = false
   type    = bool
+}
+
+# Subnets
+variable "subnet_az_1" {
+  description = "Availability Zone 1"
+  type        = string
+  default     = "us-east-1a"
+}
+
+variable "subnet_az_2" {
+  description = "Availability Zone 2"
+  type        = string
+  default     = "us-east-1b"
 }

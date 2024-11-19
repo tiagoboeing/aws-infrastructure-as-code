@@ -1,15 +1,10 @@
-data "terraform_remote_state" "sg" {
-  backend = "local"
-
-  config = {
-    path = "../../../generated/aws/sg/terraform.tfstate"
-  }
+variable "region" {
+  description = "AWS region"
+  type        = string
 }
 
-data "terraform_remote_state" "subnet" {
-  backend = "local"
-
-  config = {
-    path = "../../../generated/aws/subnet/terraform.tfstate"
-  }
+variable "service_name" {
+  description = "Service name"
+  type        = string
+  nullable    = false
 }

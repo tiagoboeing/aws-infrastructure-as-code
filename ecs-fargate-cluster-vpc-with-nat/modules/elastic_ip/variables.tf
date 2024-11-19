@@ -1,3 +1,9 @@
+variable "region" {
+  description = "AWS region where the resources will be created"
+  type        = string
+  nullable    = false
+}
+
 variable "service_name" {
   description = "Service name used for tagging"
   type        = string

@@ -7,7 +7,6 @@ Elastic Container Service (ECS) Fargate Cluster with VPC, NAT Gateway, Internet 
 **See [API Docs](./api-docs.md) for reference.**
 
 > [!NOTE]
->
 > Part of this project was based on [Cleber Gasparotto's repository](https://github.com/chgasparoto/youtube-cleber-gasparoto/tree/main/0007-aws-ecs-fargate/app). Check his [YouTube Channel](https://www.youtube.com/c/CleberGasparotto) for more content.
 
 The provisioned resources follow the diagram below (created by Cleber Gasparotto):
@@ -17,12 +16,11 @@ The provisioned resources follow the diagram below (created by Cleber Gasparotto
 ## Stack
 
 > [!IMPORTANT]
->
 > **Check the pricing of the resources before deploying them.** ECS Fargate Cluster and NAT Gateway are not free. 
 > 
 > You will be charged for Elastic IPs, NAT Gateway and the resources running on the ECS Cluster.
 
-- ECS Fargate Cluster (free, pay-per-use)
+- ECS Fargate Cluster (free, pay-per-use) - service and task definition are not included, [read ECS module documentation](./modules/ecs/README.md)
 - VPC (CIDR block fixed on `10.0.0.0/16` range to easily control this project, change it if needed)
   - Subnets - 2 Availabity Zones with 1 public subnet + 1 private subnet each
   - Security Groups
@@ -33,10 +31,16 @@ The provisioned resources follow the diagram below (created by Cleber Gasparotto
 - Amazon Certificate Manager
   - Custom SSL Certificate
 
+### Region
+
+This stack was created using `us-east-1` as the default region. You can change it passing the `region` as a variable. 
+
+> [!WARNING]
+> Not tested on other regions and some resources may not be available in all regions._**
+
 ### VPC + subnets
 
 > [!NOTE]
-> 
 > VPC CIDR block: `10.0.0.0/16`
 
 The VPC will be created with the following subnets:

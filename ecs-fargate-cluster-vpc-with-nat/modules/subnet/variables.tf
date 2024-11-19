@@ -9,3 +9,16 @@ variable "vpc_id" {
   type        = string
   nullable    = false
 }
+
+
+variable "az_1" {
+  description = "Availability Zone 1"
+  type        = string
+  nullable    = false
+}
+
+variable "az_2" {
+  description = "Availability Zone 2"
+  type        = string
+  nullable    = false
+}
