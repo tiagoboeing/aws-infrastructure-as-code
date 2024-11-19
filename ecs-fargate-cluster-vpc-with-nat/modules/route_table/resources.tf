@@ -8,10 +8,6 @@ resource "aws_route_table" "tfer--rtb-02116c1a2ac3bea6c" {
     service = "cluster-dev"
   }
 
-  tags_all = {
-    service = "cluster-dev"
-  }
-
   vpc_id = "vpc-0f2f0fc8f728581b0"
 }
 
@@ -21,7 +17,7 @@ resource "aws_route_table" "tfer--rtb-053279791c0193fe1" {
     nat_gateway_id = "nat-09cc1e5575fd52fce"
   }
 
-  tags_all = {
+  tags = {
     name    = "cluster-dev-rtb-private1-us-east-1a"
     service = "cluster-dev"
   }
@@ -36,11 +32,6 @@ resource "aws_route_table" "tfer--rtb-066cf8a8be4ffce12" {
   }
 
   tags = {
-    Name    = "cluster-dev-rtb-public"
-    service = "cluster-dev"
-  }
-
-  tags_all = {
     name    = "cluster-dev-rtb-public"
     service = "cluster-dev"
   }
@@ -54,7 +45,7 @@ resource "aws_route_table" "tfer--rtb-0baa2d9aaa9035f00" {
     nat_gateway_id = "nat-01d9eb0955bc89480"
   }
 
-  tags_all = {
+  tags = {
     name    = "cluster-dev-rtb-private2-us-east-1b"
     service = "cluster-dev"
   }

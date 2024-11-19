@@ -4,14 +4,14 @@ variable "service_name" {
   nullable    = false
 }
 
-variable "public_subnet_id_1" {
-  description = "Public subnet ID 1"
+variable "network_interface_az1_id" {
+  description = "ID of the network interface in AZ 1"
   type        = string
   nullable    = false
 }
 
-variable "public_subnet_id_2" {
-  description = "Public subnet ID 2"
+variable "network_interface_az2_id" {
+  description = "ID of the network interface in AZ 2"
   type        = string
   nullable    = false
 }

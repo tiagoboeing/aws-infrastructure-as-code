@@ -15,8 +15,9 @@ provider "aws" {
 
   default_tags {
     tags = {
-      "service" = "cluster-dev"
-      "stage"   = var.stage
+      service      = local.service_name # <service_name> - <stage>
+      service_name = var.service
+      stage        = var.stage
     }
   }
 }

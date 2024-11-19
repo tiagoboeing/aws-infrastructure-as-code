@@ -10,9 +10,8 @@ resource "aws_subnet" "public1_az_1a" {
   private_dns_hostname_type_on_launch            = "ip-name"
   availability_zone                              = "us-east-1a"
 
-  tags_all = {
-    name    = "${var.service_name}-subnet-public1-us-east-1a"
-    service = var.service_name
+  tags = {
+    name = "${var.service_name}-subnet-public1-us-east-1a"
   }
 }
 
@@ -27,9 +26,8 @@ resource "aws_subnet" "private1_az_1a" {
   private_dns_hostname_type_on_launch            = "ip-name"
   availability_zone                              = "us-east-1a"
 
-  tags_all = {
-    name    = "${var.service_name}-subnet-private1-us-east-1a"
-    service = var.service_name
+  tags = {
+    name = "${var.service_name}-subnet-private1-us-east-1a"
   }
 }
 
@@ -45,9 +43,8 @@ resource "aws_subnet" "public2_az_1b" {
   private_dns_hostname_type_on_launch            = "ip-name"
   availability_zone                              = "us-east-1b"
 
-  tags_all = {
-    name    = "${var.service_name}-subnet-public2-us-east-1b"
-    service = var.service_name
+  tags = {
+    name = "${var.service_name}-subnet-public2-us-east-1b"
   }
 }
 
@@ -62,8 +59,7 @@ resource "aws_subnet" "private2_az_1b" {
   private_dns_hostname_type_on_launch            = "ip-name"
   availability_zone                              = "us-east-1b"
 
-  tags_all = {
-    name    = "${var.service_name}-subnet-private2-us-east-1b"
-    service = var.service_name
+  tags = {
+    name = "${var.service_name}-subnet-private2-us-east-1b"
   }
 }

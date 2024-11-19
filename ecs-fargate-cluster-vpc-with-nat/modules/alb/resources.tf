@@ -30,8 +30,8 @@ resource "aws_lb" "cluster_alb" {
     }
   }
 
-  tags_all = {
-    service = var.service_name
+  tags = {
+    name = "${var.service_name}-alb"
   }
 }
 
@@ -68,10 +68,6 @@ resource "aws_lb_target_group" "ecs_cluster" {
     type            = "lb_cookie"
   }
 
-  tags_all = {
-    service = var.service_name
-  }
-
   target_group_health {
     dns_failover {
       minimum_healthy_targets_count      = "1"
@@ -82,6 +78,11 @@ resource "aws_lb_target_group" "ecs_cluster" {
       minimum_healthy_targets_count      = "1"
       minimum_healthy_targets_percentage = "off"
     }
+  }
+
+
+  tags = {
+    name = "${var.service_name}-tg"
   }
 }
 
@@ -116,6 +117,10 @@ resource "aws_lb_listener" "https" {
     ignore_client_certificate_expiry = "false"
     mode                             = "off"
   }
+
+  tags = {
+    name = "${var.service_name}-lb-listener-https"
+  }
 }
 
 resource "aws_lb_listener" "http" {
@@ -135,5 +140,9 @@ resource "aws_lb_listener" "http" {
       query       = "#{query}"
       status_code = "HTTP_301"
     }
+  }
+
+  tags = {
+    name = "${var.service_name}-lb-listener-http"
   }
 }

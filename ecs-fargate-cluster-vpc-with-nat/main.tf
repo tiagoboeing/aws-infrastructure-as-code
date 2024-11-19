@@ -6,6 +6,9 @@ locals {
 # Get AWS Account ID
 data "aws_caller_identity" "current" {}
 
+# Get AWS Region
+data "aws_region" "current" {}
+
 # Certificate
 module "acm" {
   source               = "./modules/acm"
@@ -27,14 +30,6 @@ module "ecr" {
     aws = aws
   }
 }
-
-# module "ecs" {
-#   source  = "./modules/ecs"
-#   region  = var.region
-#   alb_arn = module.alb.aws_lb_tfer--alb-0f2f0fc8f728581b0_arn
-#   ecr_id  = module.ecr.aws_ecr_repository_tfer--ecs-0f2f0fc8f728581b0_id
-# }
-
 
 # Network
 module "vpc" {
@@ -78,17 +73,11 @@ module "security_group" {
   }
 }
 
-module "alb" {
-  source                = "./modules/alb"
-  service_name          = local.service_name
-  alb_security_group_id = module.security_group.aws_security_group_cluster_from_internet_to_alb_id
-  certificate_arn       = module.acm.aws_acm_certificate_arn
-  vpc_id                = module.vpc.aws_vpc_id
-
-  public_subnet_ids = [
-    module.subnet.aws_subnet_public1_az_1a_id,
-    module.subnet.aws_subnet_public2_az_1b_id
-  ]
+module "elastic_ip" {
+  source                   = "./modules/elastic_ip"
+  service_name             = local.service_name
+  network_interface_az1_id = module.nat.aws_nat_gateway_nat_1_network_interface_id
+  network_interface_az2_id = module.nat.aws_nat_gateway_nat_2_network_interface_id
 
   providers = {
     aws = aws
@@ -112,3 +101,29 @@ module "nat" {
 #   vpc_id = module.vpc.aws_vpc_tfer--vpc-0f2f0fc8f728581b0_id
 #   igw_id = module.igw.aws_internet_gateway_tfer--igw-0f2f0fc8f728581b0_id
 # }
+
+# Application
+module "alb" {
+  source                = "./modules/alb"
+  service_name          = local.service_name
+  alb_security_group_id = module.security_group.aws_security_group_cluster_from_internet_to_alb_id
+  certificate_arn       = module.acm.aws_acm_certificate_arn
+  vpc_id                = module.vpc.aws_vpc_id
+
+  public_subnet_ids = [
+    module.subnet.aws_subnet_public1_az_1a_id,
+    module.subnet.aws_subnet_public2_az_1b_id
+  ]
+
+  providers = {
+    aws = aws
+  }
+}
+
+# module "ecs" {
+#   source  = "./modules/ecs"
+#   region  = var.region
+#   alb_arn = module.alb.aws_lb_tfer--alb-0f2f0fc8f728581b0_arn
+#   ecr_id  = module.ecr.aws_ecr_repository_tfer--ecs-0f2f0fc8f728581b0_id
+# }
+

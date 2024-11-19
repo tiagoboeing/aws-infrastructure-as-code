@@ -17,6 +17,10 @@ resource "aws_security_group" "default" {
     self      = "true"
     to_port   = 0
   }
+
+  tags = {
+    name = "Default VPC security group"
+  }
 }
 
 resource "aws_security_group" "cluster_from_internet_to_alb" {
@@ -57,9 +61,8 @@ resource "aws_security_group" "cluster_from_internet_to_alb" {
     to_port     = 3000
   }
 
-  tags_all = {
-    name    = "Allow incoming traffic from internet to the ALB"
-    service = var.service_name
+  tags = {
+    name = "Allow incoming traffic from internet to the ALB"
   }
 }
 
@@ -84,8 +87,7 @@ resource "aws_security_group" "cluster_from_alb_to_ecs" {
     to_port         = 0
   }
 
-  tags_all = {
-    name    = "Traffic from ALB to ECS"
-    service = var.service_name
+  tags = {
+    name = "Traffic from ALB to ECS"
   }
 }

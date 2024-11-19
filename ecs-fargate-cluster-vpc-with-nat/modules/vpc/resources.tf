@@ -6,8 +6,7 @@ resource "aws_vpc" "main" {
   enable_network_address_usage_metrics = "false"
   instance_tenancy                     = "default"
 
-  tags_all = {
-    name    = "${var.service_name}-vpc"
-    service = var.service_name
+  tags = {
+    name = "${var.service_name}-vpc"
   }
 }
