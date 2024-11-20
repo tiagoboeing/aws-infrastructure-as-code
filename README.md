@@ -10,6 +10,7 @@ Infrastructure as Code (IaC) stacks for Amazon Web Services (AWS).
 
 - [Cognito User Pool with Identity Providers (social logins)](./cognito-user-pool)
 - [CDN on custom domain with CloudFront, S3, Route53 and Certificate Manager](./cloudfront-cdn)
+- [ECS Cluster with VPC, NAT Gateway, Internet Gateway and custom domain](./ecs-cluster-vpc-nat)
 
 Each infrastructure has its own README with instructions.
 

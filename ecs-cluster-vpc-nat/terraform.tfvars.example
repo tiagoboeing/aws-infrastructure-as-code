@@ -1,0 +1,6 @@
+region              = "us-east-1"
+service_name        = "terraform-cluster"
+stage               = "dev"
+domain              = "api.my-domain.com"
+route53_base_domain = "my-domain.com"
+ecr_repository_name = "terraform-cluster/my-app"
