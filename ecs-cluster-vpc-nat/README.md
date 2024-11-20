@@ -31,6 +31,19 @@ The provisioned resources follow the diagram below (created by Cleber Gasparotto
 - Amazon Certificate Manager
   - Custom SSL Certificate
 
+### Resource groups
+
+Check all resources created by this project using [**Resource Groups & Tag Editor**](https://us-east-1.console.aws.amazon.com/resource-groups/home) on AWS Console.
+
+This project apply the following tags to all resources:
+
+- `Name` - A friendly name for the resource
+- `ServiceName` - The name of the service
+- `Service` - The name of the service + stage (e.g. my-service-dev)
+- `Stage` - The stage of the service (e.g. dev, prod)
+
+> Check the `default_tags` map on [`provider.tf`](./provider.tf) file.
+
 ### Region
 
 This stack was created using `us-east-1` as the default region. You can change it passing the `region` as a variable. 
@@ -68,15 +81,6 @@ To change CIDR blocks or edit other settings, go to the following folder modules
 - `cluster_from_alb_to_ecs` 
   - Allow inbound traffic from the Application Load Balancer to the ECS Cluster
   - Allow outbound traffic to the Internet
-
-### Tags
-
-This project will apply the following tags to all resources:
-
-- `service` - The name of the service
-- `stage` - The stage of the service (e.g. dev, prod)
-
-> Check the `default_tags` map on [`provider.tf`](./provider.tf) file.
 
 ## Requirements
 
