@@ -13,3 +13,9 @@ variable "route53_private_zone" {
   description = "Route53 private zone"
   type        = bool
 }
+
+variable "service_name" {
+  description = "Service name"
+  type        = string
+  nullable    = false
+}

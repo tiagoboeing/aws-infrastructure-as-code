@@ -8,6 +8,10 @@ data "aws_route53_zone" "domain_zone" {
 resource "aws_acm_certificate" "certificate" {
   domain_name       = var.domain != "" ? var.domain : data.aws_route53_zone.domain_zone.name
   validation_method = "DNS"
+
+  tags = {
+    Name = var.service_name
+  }
 }
 
 resource "aws_acm_certificate_validation" "certificate_validation" {

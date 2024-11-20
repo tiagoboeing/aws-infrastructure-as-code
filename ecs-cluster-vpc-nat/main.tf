@@ -19,7 +19,7 @@ resource "aws_resourcegroups_group" "service" {
       "ResourceTypeFilters": ["AWS::AllSupported"],
       "TagFilters": [
         {
-          "Key": "service",
+          "Key": "Service",
           "Values": ["${local.service_full_name}"]
         }
       ]
@@ -35,6 +35,7 @@ resource "aws_resourcegroups_group" "service" {
 # Certificate
 module "acm" {
   source               = "./modules/acm"
+  service_name         = local.service_full_name
   domain               = var.domain
   route53_base_domain  = var.route53_base_domain
   route53_private_zone = var.route53_private_zone
