@@ -136,18 +136,19 @@ module "nat" {
 }
 
 module "route_table" {
-  source              = "./modules/route_table"
-  service_name        = local.service_full_name
-  vpc_id              = module.vpc.aws_vpc_id
-  igw_id              = module.igw.aws_internet_gateway_default_id
-  nat_gw_id_1         = module.nat.aws_nat_gateway_nat_1_id
-  nat_gw_id_2         = module.nat.aws_nat_gateway_nat_2_id
-  az_1                = var.subnet_az_1
-  az_2                = var.subnet_az_2
-  subnet_public_az_1  = module.subnet.aws_subnet_public1_az_1a_id
-  subnet_public_az_2  = module.subnet.aws_subnet_public2_az_1b_id
-  subnet_private_az_1 = module.subnet.aws_subnet_private1_az_1a_id
-  subnet_private_az_2 = module.subnet.aws_subnet_private2_az_1b_id
+  source                 = "./modules/route_table"
+  service_name           = local.service_full_name
+  vpc_id                 = module.vpc.aws_vpc_id
+  igw_id                 = module.igw.aws_internet_gateway_default_id
+  nat_gw_id_1            = module.nat.aws_nat_gateway_nat_1_id
+  nat_gw_id_2            = module.nat.aws_nat_gateway_nat_2_id
+  az_1                   = var.subnet_az_1
+  az_2                   = var.subnet_az_2
+  subnet_public_az_1     = module.subnet.aws_subnet_public1_az_1a_id
+  subnet_public_az_2     = module.subnet.aws_subnet_public2_az_1b_id
+  subnet_private_az_1    = module.subnet.aws_subnet_private1_az_1a_id
+  subnet_private_az_2    = module.subnet.aws_subnet_private2_az_1b_id
+  default_route_table_id = module.vpc.aws_vpc_default_route_table_id
 
   depends_on = [
     module.vpc,

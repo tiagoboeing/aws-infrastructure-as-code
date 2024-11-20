@@ -1,12 +1,7 @@
 output "aws_route_table_main_id" {
-  value       = aws_route_table.main.id
+  value       = aws_default_route_table.main.id
   description = "The ID of the main route table"
 }
-
-# output "aws_main_route_table_association_main_id" {
-#   value       = aws_main_route_table_association.main.id
-#   description = "The ID of the main route table association"
-# }
 
 output "aws_route_table_public_id" {
   value       = aws_route_table.public.id

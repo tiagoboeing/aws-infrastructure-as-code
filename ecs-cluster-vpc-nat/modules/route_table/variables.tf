@@ -10,6 +10,12 @@ variable "vpc_id" {
   nullable    = false
 }
 
+variable "default_route_table_id" {
+  description = "The ID of the default route table"
+  type        = string
+  nullable    = false
+}
+
 variable "igw_id" {
   description = "The ID of the internet gateway"
   type        = string

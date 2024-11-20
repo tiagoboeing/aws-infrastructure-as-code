@@ -1,15 +1,10 @@
-resource "aws_route_table" "main" {
-  vpc_id = var.vpc_id
-
+# Apply tag to main route table
+resource "aws_default_route_table" "main" {
+  default_route_table_id = var.default_route_table_id
   tags = {
-    Name = "cluster-dev-rtb-main"
+    Name = "${var.service_name}-rtb-main"
   }
 }
-
-# resource "aws_main_route_table_association" "main" {
-#   route_table_id = aws_route_table.main.id
-#   vpc_id         = var.vpc_id
-# }
 
 # Public
 resource "aws_route_table" "public" {
