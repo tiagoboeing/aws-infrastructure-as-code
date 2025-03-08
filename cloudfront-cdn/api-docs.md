@@ -23,6 +23,7 @@ No modules.
 | [aws_acm_certificate_validation.certificate_validation](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/acm_certificate_validation) | resource |
 | [aws_cloudfront_distribution.cloudfront](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/cloudfront_distribution) | resource |
 | [aws_cloudfront_origin_access_control.cloudfront_acl](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/cloudfront_origin_access_control) | resource |
+| [aws_resourcegroups_group.service](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/resourcegroups_group) | resource |
 | [aws_route53_record.certificate_records](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_record) | resource |
 | [aws_route53_record.domain_record](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/route53_record) | resource |
 | [aws_s3_bucket.bucket](https://registry.terraform.io/providers/hashicorp/aws/4.59.0/docs/resources/s3_bucket) | resource |
