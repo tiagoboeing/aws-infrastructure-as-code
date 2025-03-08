@@ -59,8 +59,7 @@ resource "aws_cloudfront_distribution" "cloudfront" {
 
 
   tags = {
-    Stage   = local.stage,
-    Service = local.service
+    Name = "${local.resource_prefix_name}-cloudfront"
   }
 
   depends_on = [

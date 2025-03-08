@@ -16,6 +16,29 @@ data "aws_route53_zone" "domain_zone" {
   private_zone = local.route53_private_zone
 }
 
+# Resource group
+resource "aws_resourcegroups_group" "service" {
+  name = local.resource_prefix_name
+
+  resource_query {
+    query = <<JSON
+    {
+      "ResourceTypeFilters": ["AWS::AllSupported"],
+      "TagFilters": [
+        {
+          "Key": "Service",
+          "Values": ["${local.resource_prefix_name}"]
+        }
+      ]
+    }
+    JSON
+  }
+
+  tags = {
+    Name = "${local.resource_prefix_name}-rg"
+  }
+}
+
 
 
 

@@ -2,8 +2,7 @@ resource "aws_s3_bucket" "bucket" {
   bucket = "${local.resource_prefix_name}-bucket-${data.aws_caller_identity.current.account_id}"
 
   tags = {
-    Stage   = local.stage,
-    Service = local.service
+    Name = "${local.resource_prefix_name}-bucket"
   }
 }
 

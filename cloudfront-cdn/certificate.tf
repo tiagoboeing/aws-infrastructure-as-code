@@ -3,8 +3,7 @@ resource "aws_acm_certificate" "certificate" {
   validation_method = "DNS"
 
   tags = {
-    Stage   = local.stage,
-    Service = local.service
+    Name = "${local.resource_prefix_name}-certificate"
   }
 }
 
