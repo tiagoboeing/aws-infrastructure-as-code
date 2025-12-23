@@ -1,0 +1,26 @@
+service_name            = "my-service-name"
+stage                   = "prod"
+route53_zone_domain     = "domain.com"
+api_domain              = "api.domain.com"
+registry_name           = "namespace/registry-name"
+registry_tag_mutability = "MUTABLE"
+registry_scan_on_push   = true
+
+create_apprunner_service = true
+
+# traefik/whoami service port
+service_port = 3000
+
+cors_allow_origins = [
+  "https://website.com"
+]
+
+# Create a test parameter in SSM
+# aws ssm put-parameter --name "/app/db/password" --value "sua-senha-segura" --type "SecureString"
+ssm_secrets = {
+  "DATABASE_URL"                         = "/namespace/secret-name"
+}
+
+environment_variables = {
+  NODE_ENV                     = "production"
+}
