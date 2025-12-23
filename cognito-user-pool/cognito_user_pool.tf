@@ -10,7 +10,7 @@ resource "aws_cognito_user_pool" "pool" {
   }
 
   admin_create_user_config {
-    allow_admin_create_user_only = "false"
+    allow_admin_create_user_only = "true"
   }
 
   alias_attributes         = ["email", "preferred_username"]
@@ -53,7 +53,7 @@ resource "aws_cognito_user_pool" "pool" {
     attribute_data_type      = "String"
     developer_only_attribute = "false"
     mutable                  = "true"
-    required                 = "true"
+    required                 = "false"
 
     string_attribute_constraints {
       max_length = "2048"
@@ -66,7 +66,7 @@ resource "aws_cognito_user_pool" "pool" {
     attribute_data_type      = "String"
     developer_only_attribute = "false"
     mutable                  = "true"
-    required                 = "true"
+    required                 = "false"
 
     string_attribute_constraints {
       max_length = "2048"
