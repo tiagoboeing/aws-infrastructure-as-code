@@ -36,6 +36,7 @@ variable "linkedin_credentials" {
   description = "Linkedin OIDC settings"
   type        = map(string)
   default     = {}
+  sensitive   = true
 }
 
 variable "google_credentials" {

@@ -28,6 +28,7 @@ variable "ssm_secrets" {
   description = "Map of environment variable names to SSM parameter names for secrets"
   type        = map(string)
   default     = {}
+  sensitive   = true
   # Eg.: { "DATABASE_PASSWORD" = "/app/db/password" }
 }
 
