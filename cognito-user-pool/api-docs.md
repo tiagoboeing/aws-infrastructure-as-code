@@ -39,7 +39,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_callback_urls"></a> [callback\_urls](#input\_callback\_urls) | List of allowed callback URLs | `list(string)` | `[]` | no |
 | <a name="input_domain"></a> [domain](#input\_domain) | Custom domain name to use on the user pool | `string` | n/a | yes |
-| <a name="input_google_credentials"></a> [google\_credentials](#input\_google\_credentials) | Linkedin OIDC settings | `map(string)` | `{}` | no |
+| <a name="input_google_credentials"></a> [google\_credentials](#input\_google\_credentials) | Google OAuth settings | `map(string)` | `{}` | no |
 | <a name="input_linkedin_credentials"></a> [linkedin\_credentials](#input\_linkedin\_credentials) | Linkedin OIDC settings | `map(string)` | `{}` | no |
 | <a name="input_logout_urls"></a> [logout\_urls](#input\_logout\_urls) | List of allowed logout URLs | `list(string)` | `[]` | no |
 | <a name="input_pool_name"></a> [pool\_name](#input\_pool\_name) | The name of the user pool | `string` | n/a | yes |
