@@ -39,9 +39,10 @@ variable "linkedin_credentials" {
 }
 
 variable "google_credentials" {
-  description = "Linkedin OIDC settings"
+  description = "Google OAuth settings"
   type        = map(string)
   default     = {}
+  sensitive   = true
 }
 
 # Custom domain
