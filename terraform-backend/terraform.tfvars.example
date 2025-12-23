@@ -1,0 +1,2 @@
+service_name = "terraform-backend"
+stage        = "prod"
